@@ -1,4 +1,4 @@
-ProductID,SUM of Quantity
+ProductID,TotalQuantity
 306,12150
 433,12181
 416,13800
