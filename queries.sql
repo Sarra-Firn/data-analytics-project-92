@@ -44,7 +44,7 @@ on  e.employee_id=s.sales_person_id
 inner join products as p
 on s.product_id = p.product_id
 group by seller, extract ('isodow' from s.sale_date), to_char(s.sale_date, 'day')
-order by seller, extract ('isodow' from s.sale_date);
+order by extract ('isodow' from s.sale_date), seller;
 
 
 /*количество покупателей в разных возрастных группах: 16-25, 26-40 и 40+*/
@@ -59,19 +59,16 @@ order by 1;
 
 
 /*Данные по количеству уникальных покупателей и выручке, которую они принесли*/
-select CONCAT(c.first_name, '',c.last_name) as customer,
-min(s.sale_date) as sale_date,
-CONCAT(e.first_name, '', e.last_name) as seller
-FROM customers as c
-left join sales as s
-on c.customer_id=s.customer_id
+select to_char(s.sale_date, 'yyyy-MM') as date,
+	 	COUNT (distinct c.customer_id) as total_customers,
+		SUM(p.price*s.quantity) as income
+FROM sales as s
+left join customers as c
+on s.customer_id=c.customer_id
 left join products as p
-on p.product_id=s.product_id
-left join employees as e
-on e.employee_id=s.sales_person_id
-where p.price =0
-group by 1, 3, c.customer_id
-order by c.customer_id;
+on s.product_id=p.product_id
+group by 1
+order by 1;
 
 
 /*отчет о покупателях, первая покупка которых была в ходе проведения акций (акционные товары отпускали со стоимостью равной 0)*/
