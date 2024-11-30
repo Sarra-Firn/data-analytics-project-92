@@ -72,16 +72,23 @@ order by 1;
 
 
 /*отчет о покупателях, первая покупка которых была в ходе проведения акций (акционные товары отпускали со стоимостью равной 0)*/
-select CONCAT(c.first_name, '',c.last_name) as customer,
-min(s.sale_date) as sale_date,
-CONCAT(e.first_name, '', e.last_name) as seller
-FROM customers as c
-left join sales as s
-on c.customer_id=s.customer_id
-left join products as p
-on p.product_id=s.product_id
-left join employees as e
-on e.employee_id=s.sales_person_id
-where p.price =0
-group by 1, 3, c.customer_id
-order by c.customer_id;
+WITH tab AS (
+    SELECT 
+        CONCAT(c.first_name, ' ', c.last_name) AS customer,
+        MIN(s.sale_date) AS sale_date,
+        CONCAT(e.first_name, ' ', e.last_name) AS seller,
+        ROW_NUMBER() OVER (PARTITION BY c.customer_id ORDER BY MIN(s.sale_date)) AS rn
+    FROM customers AS c
+    LEFT JOIN sales AS s ON c.customer_id = s.customer_id
+    LEFT JOIN products AS p ON p.product_id = s.product_id
+    LEFT JOIN employees AS e ON e.employee_id = s.sales_person_id
+    WHERE p.price = 0 
+    GROUP BY c.customer_id, c.first_name, c.last_name, e.first_name, e.last_name
+)
+SELECT 
+    customer,
+    sale_date,
+    seller
+FROM tab
+WHERE rn = 1
+ORDER BY sale_date;
