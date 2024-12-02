@@ -15,7 +15,6 @@ group by CONCAT(first_name, ' ', last_name)
 order by income desc
 limit 10;
 
-
 /*Отчёт с продавцами, чья выручка ниже средней выручки всех продавцов:*/
 select CONCAT(e.first_name, ' ', e.last_name) as seller, 
 	FLOOR(AVG(p.price*s.quantity)) as average_income
@@ -31,7 +30,6 @@ having FLOOR(AVG(p.price*s.quantity)) < (select AVG(p.price*s.quantity) as avg
 						on p.product_id=s.product_id)
 order by average_income;
 
-
 /*Отчёт с данными по выручке по каждому продавцу и дню недели:*/
 select CONCAT(e.first_name, ' ', e.last_name) as seller,
 	to_char(s.sale_date, 'day') as day_of_week,
@@ -44,7 +42,6 @@ on s.product_id = p.product_id
 group by seller, extract ('isodow' from s.sale_date), to_char(s.sale_date, 'day')
 order by extract ('isodow' from s.sale_date), seller;
 
-
 /*количество покупателей в разных возрастных группах: 16-25, 26-40 и 40+*/
 select CASE
   WHEN age BETWEEN 16 AND 25 THEN '16-25'
@@ -54,7 +51,6 @@ END AS age_category, COUNT (*) AS age_count
 FROM customers as c
 group by 1
 order by 1;
-
 
 /*Данные по количеству уникальных покупателей и выручке, которую они принесли*/
 select to_char(s.sale_date, 'yyyy-MM') as date,
@@ -68,10 +64,9 @@ on s.product_id=p.product_id
 group by 1
 order by 1;
 
-
 /*отчет о покупателях, первая покупка которых была в ходе проведения акций (акционные товары отпускали со стоимостью равной 0)*/
 WITH tab AS (
-    SELECT 
+    	SELECT 
         CONCAT(c.first_name, ' ', c.last_name) AS customer,
         MIN(s.sale_date) AS sale_date,
         CONCAT(e.first_name, ' ', e.last_name) AS seller,
