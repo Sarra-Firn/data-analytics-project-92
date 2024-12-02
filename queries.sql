@@ -3,7 +3,6 @@ select COUNT(customer_id) as customers_count
 from customers;
 
 /*Отчёт с продавцами у которых наибольшая выручка*/
-
 select CONCAT(first_name, ' ', last_name) as seller, 
 		COUNT(s.sales_id) as operations,
 	 	FLOOR(SUM(p.price*s.quantity)) as income
@@ -18,7 +17,6 @@ limit 10;
 
 
 /*Отчёт с продавцами, чья выручка ниже средней выручки всех продавцов:*/
-
 select CONCAT(e.first_name, ' ', e.last_name) as seller, 
 		FLOOR(AVG(p.price*s.quantity)) as average_income
 		FROM employees as e
