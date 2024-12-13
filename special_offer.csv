@@ -1,17 +1,17 @@
-"customer","sale_date","seller"
-CristinaXu,1992-09-21,AbrahamBennet
-JacobMartinez,1992-09-21,MichaelO'Leary
-JaredGray,1992-09-22,DirkStringer
-KaitlynAllen,1992-09-21,DirkStringer
-KarenHuang,1992-09-21,DirkStringer
-KristaGill,1992-09-22,MarjorieGreen
-KristenLi,1992-09-21,MichaelO'Leary
-LeviGonzalez,1992-09-21,MarjorieGreen
-MarioRai,1992-09-21,AbrahamBennet
-MyaColeman,1992-09-24,MichaelO'Leary
-OliviaBennett,1992-09-21,MichaelO'Leary
-OliviaBennett,1992-11-10,ReginaldBlotchet-Halls
-RichardMartinez,1992-09-21,AbrahamBennet
-SamuelSharma,1992-09-22,MichaelO'Leary
-TyroneRuiz,1992-09-21,MarjorieGreen
-WillieGao,1992-09-22,MichaelO'Leary
+customer;sale_date;seller
+CristinaXu;21.09.1992 0:00;AbrahamBennet
+JacobMartinez;21.09.1992 0:00;MichaelO'Leary
+JaredGray;22.09.1992 0:00;DirkStringer
+KaitlynAllen;21.09.1992 0:00;DirkStringer
+KarenHuang;21.09.1992 0:00;DirkStringer
+KristaGill;22.09.1992 0:00;MarjorieGreen
+KristenLi;21.09.1992 0:00;MichaelO'Leary
+LeviGonzalez;21.09.1992 0:00;MarjorieGreen
+MarioRai;21.09.1992 0:00;AbrahamBennet
+MyaColeman;24.09.1992 0:00;MichaelO'Leary
+OliviaBennett;21.09.1992 0:00;MichaelO'Leary
+OliviaBennett;10.11.1992 0:00;ReginaldBlotchet-Halls
+RichardMartinez;21.09.1992 0:00;AbrahamBennet
+SamuelSharma;22.09.1992 0:00;MichaelO'Leary
+TyroneRuiz;21.09.1992 0:00;MarjorieGreen
+WillieGao;22.09.1992 0:00;
