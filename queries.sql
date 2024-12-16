@@ -15,7 +15,6 @@ group by CONCAT(first_name, ' ', last_name)
 order by income desc
 limit 10;
 
-
 /*Отчёт с продавцами, чья выручка ниже средней выручки всех продавцов:*/
 select CONCAT(e.first_name, ' ', e.last_name) as seller, 
 	FLOOR(AVG(p.price*s.quantity)) as average_income
@@ -31,11 +30,10 @@ having FLOOR(AVG(p.price*s.quantity)) < (select AVG(p.price*s.quantity) as avg
 						on p.product_id=s.product_id)
 order by average_income;
 
-
 /*Отчёт с данными по выручке по каждому продавцу и дню недели:*/
 select CONCAT(e.first_name, ' ', e.last_name) as seller,
 	to_char(s.sale_date, 'day') as day_of_week,
-	FLOOR(SUM(p.price*s.quantity)) as average_income
+	FLOOR(SUM(p.price*s.quantity)) as income
 	FROM employees as e
 left join sales as s
 on  e.employee_id=s.sales_person_id
@@ -43,7 +41,6 @@ inner join products as p
 on s.product_id = p.product_id
 group by seller, extract ('isodow' from s.sale_date), to_char(s.sale_date, 'day')
 order by extract ('isodow' from s.sale_date), seller;
-
 
 /*количество покупателей в разных возрастных группах: 16-25, 26-40 и 40+*/
 select CASE
@@ -55,11 +52,10 @@ FROM customers as c
 group by 1
 order by 1;
 
-
 /*Данные по количеству уникальных покупателей и выручке, которую они принесли*/
-select to_char(s.sale_date, 'yyyy-MM') as date,
+select to_char(s.sale_date, 'yyyy-MM') as selling_month,
 	COUNT (distinct c.customer_id) as total_customers,
-	SUM(p.price*s.quantity) as income
+	TRUNC(SUM(p.price*s.quantity),0) as income
 FROM sales as s
 left join customers as c
 on s.customer_id=c.customer_id
@@ -68,10 +64,9 @@ on s.product_id=p.product_id
 group by 1
 order by 1;
 
-
 /*отчет о покупателях, первая покупка которых была в ходе проведения акций (акционные товары отпускали со стоимостью равной 0)*/
 WITH tab AS (
-    SELECT 
+    	SELECT c.customer_id,
         CONCAT(c.first_name, ' ', c.last_name) AS customer,
         MIN(s.sale_date) AS sale_date,
         CONCAT(e.first_name, ' ', e.last_name) AS seller,
@@ -87,6 +82,6 @@ SELECT
     customer,
     sale_date,
     seller
-FROM tab
+FROM tab as t
 WHERE rn = 1
-ORDER BY sale_date;
+ORDER BY t.customer_id;
